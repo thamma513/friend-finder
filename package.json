@@ -13,5 +13,14 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.3"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thamma513/friend-finder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thamma513/friend-finder/issues"
+  },
+  "homepage": "https://github.com/thamma513/friend-finder#readme"
 }
