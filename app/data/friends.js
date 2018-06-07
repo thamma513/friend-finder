@@ -1,9 +1,8 @@
-var friendResponses = [
-
-	{
+module.exports = [
+    {
 		name: "Tyler", 
 		photo: "http://static.nanopress.it/r/845X0/www.nanopress.it/wp-content/uploads/2014/08/Monnalisa1.jpg",
-		answers: [
+		scores: [
 
 				"4",
 				"2",
@@ -19,7 +18,7 @@ var friendResponses = [
 	}, {
 		name: "Some dude",
 		photo: "http://imgur.com/DJ",
-		answers: [
+		scores: [
 
 				"5",
 				"2",
@@ -35,7 +34,7 @@ var friendResponses = [
 	}, {
 		name: "Marky Mark",
 		photo: "http://image.jpg",
-		answers: [
+		scores: [
 
 				"3",
 				"3",
@@ -51,4 +50,3 @@ var friendResponses = [
 	}
 ];
 
-module.exports = friendResponses;
