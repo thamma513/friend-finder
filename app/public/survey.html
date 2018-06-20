@@ -179,69 +179,68 @@
 
         <script src="https://code.jquery.com/jquery.js"></script>
         <script type="text/javascript">
+    $("#submit").on("click", function (event) {
+        event.preventDefault();
+        var answers = []
+        for (var i = 0; i < 10; i++) {
+            var answer = $("." + i).val()
+            answers.push(parseInt(answer));
+            console.log(answer);
+        }
 
-            $("#submit").on("click", function(event) {
-                event.preventDefault();
-                var answers = []
-                for(var i = 0; i < 10; i++){
-                    var answer = $("." + i).val()
-                    answers.push(parseInt(answer));
-                    console.log(answer);
-    }
+        var newFriend = {
+            "name": $("#name").val().trim(),
+            "photo": $("#photo").val().trim(),
+            "answers": [$("#q1").val().trim(), $("#q2").val().trim(), $("#q3").val().trim(), $(
+                    "#q4").val().trim(), $("#q5").val().trim(),
+                $("#q6").val().trim(), $("#q7").val().trim(), $("#q8").val().trim(), $("#q9").val()
+                .trim(), $("#q10").val().trim()
+            ]
+        }
+        work(newFriend);
+        $.post("api/friends", newFriend).then(function (data) {
+            console.log("New respose posted")
+        });
 
-                var newFriend = {
-                    "name": $("#name").val().trim(),
-                    "photo": $("#photo").val().trim(),
-                    "answers": [$("#q1").val().trim(), $("#q2").val().trim(), $("#q3").val().trim(), $(
-                            "#q4").val().trim(), $("#q5").val().trim(),
-                        $("#q6").val().trim(), $("#q7").val().trim(), $("#q8").val().trim(), $("#q9").val()
-                        .trim(), $("#q10").val().trim()
-                    ]
+        $("#name").val("");
+        $("#photo").val("");
+        $("#q1").val("");
+        $("#q2").val("");
+        $("#q3").val("");
+        $("#q4").val("");
+        $("#q5").val("");
+        $("#q6").val("");
+        $("#q7").val("");
+        $("#q8").val("");
+        $("#q9").val("");
+        $("#q10").val("");
+    });
+
+    function work(newFriend) {
+        var newAnswers = newFriend.answers;
+        var currentURL = window.location.origin;
+        $.ajax({
+            url: currentURL + "/api/friends",
+            method: "GET"
+        }).then(function (responses) {
+            console.log(responses);
+            var scores = [];
+            for (var i = 0; i < responses.length; i++) {
+                var answers = responses[i].answers;
+                var difference = 0
+
+                for (var x = 0; x < 5; x++) {
+                    difference += Math.abs(newAnswers[x] - answers[x]);
                 }
-                work(newFriend);
-                $.post("api/friends", newFriend).then(function (data) {
-                    console.log("New respose posted")
-                });
-
-                $("#name").val("");
-                $("#photo").val("");
-                $("#q1").val("");
-                $("#q2").val("");
-                $("#q3").val("");
-                $("#q4").val("");
-                $("#q5").val("");
-                $("#q6").val("");
-                $("#q7").val("");
-                $("#q8").val("");
-                $("#q9").val("");
-                $("#q10").val("");
-            });
-
-            function work(newFriend) {
-                var newAnswers = newFriend.answers;
-                var currentURL = window.location.origin;
-                $.ajax({
-                    url: currentURL + "/api/friends",
-                    method: "GET"
-                }).then(function (responses) {
-                    console.log(responses);
-                    var scores = [];
-                    for (var i = 0; i < responses.length; i++) {
-                        var answers = responses[i].answers;
-                        var difference = 0;
-
-                        for (var x = 0; x < 10; x++) {
-                            difference += Math.abs(newAnswers[x] - answers[x]);
-                        }
-                        scores.push(difference);
-                    }
-                    var indexMatch = scores.indexOf(Math.min(...scores));
-                    console.log(responses[indexMatch].name);
-                    $("#match").append("<h2>Your Best Match: " + responses[indexMatch].name + "!!!</h2>");
-                    alert("Your best match is " + responses[indexMatch].name);
-                });
+                scores.push(difference);
             }
-        </script>
+            var indexMatch = scores.indexOf(Math.min(...scores));
+            console.log(responses[indexMatch].name);
+            $("#match").append("<h2>Your Best Match: " + responses[indexMatch].name + "!!!</h2>");
+            alert("Your best match is " + responses[indexMatch].name);
+        });
+    }
+</script>
 </body>
 
 </html>
